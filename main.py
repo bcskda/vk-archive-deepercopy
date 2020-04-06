@@ -1,5 +1,6 @@
 import argparse
 import logging
+import progressbar
 from extractor import supported_sources
 
 KNOWN_ENCODINGS = 'windows-1251 utf-8'.split()
@@ -18,6 +19,7 @@ def parse_cmdline():
     return parser.parse_args()
 
 def main(cmdline):
+    progressbar.streams.wrap_stderr()
     logging.basicConfig(level=logging.INFO)
     source = supported_sources[cmdline.source]
     source.call(cmdline)

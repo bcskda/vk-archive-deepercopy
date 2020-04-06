@@ -3,6 +3,7 @@ import glob
 import itertools
 import logging
 import os
+from progressbar import progressbar
 import re
 import requests
 from typing import List
@@ -63,8 +64,7 @@ def download_by_pattern(url_regex: str, filenames: List[str], output_dir: str, *
     os.makedirs(output_dir, exist_ok=True)
     downloads = 0
     # TODO statistics by extention
-    # TODO progressbar
-    for idx, (url, ext) in enumerate(matches):
+    for idx, (url, ext) in progressbar(enumerate(matches), max_value=len(matches)):
         local_name = '{:07d}'.format(idx) + '_' + os.path.basename(url)
         try:
             download(url, os.path.join(output_dir, local_name))
